@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Calculator extends Application {
     TextField textField;
@@ -185,34 +186,36 @@ public class Calculator extends Application {
         // Row 6
         gridPane.add(buttonNumberZero, 1, 5);
         gridPane.add(buttonOperationEqual, 3, 5);
-
-        // Events
-        buttonNumberZero.setOnAction(event -> handleButtonPress("0"));
-        buttonNumberOne.setOnAction(event -> handleButtonPress("1"));
-        buttonNumberTwo.setOnAction(event -> handleButtonPress("2"));
-        buttonNumberThree.setOnAction(event -> handleButtonPress("3"));
-        buttonNumberFour.setOnAction(event -> handleButtonPress("4"));
-        buttonNumberFive.setOnAction(event -> handleButtonPress("5"));
-        buttonNumberSix.setOnAction(event -> handleButtonPress("6"));
-        buttonNumberSeven.setOnAction(event -> handleButtonPress("7"));
-        buttonNumberEight.setOnAction(event -> handleButtonPress("8"));
-        buttonNumberNine.setOnAction(event -> handleButtonPress("9"));
-        buttonOperationAddition.setOnAction(event -> handleButtonPress("+"));
-        buttonOperationSubtraction.setOnAction(event -> handleButtonPress("-"));
-        buttonOperationMultiplication.setOnAction(event -> handleButtonPress("*"));
-        buttonOperationDivision.setOnAction(event -> handleButtonPress("/"));
-        buttonOperationEqual.setOnAction(event -> handleButtonPress("="));
-        buttonOperationEqual.setOnAction(event -> handleButtonPress("C"));
+// Events
+        buttonNumberZero.setOnAction(event -> handleButtonPressNumber("0"));
+        buttonNumberOne.setOnAction(event -> handleButtonPressNumber("1"));
+        buttonNumberTwo.setOnAction(event -> handleButtonPressNumber("2"));
+        buttonNumberThree.setOnAction(event -> handleButtonPressNumber("3"));
+        buttonNumberFour.setOnAction(event -> handleButtonPressNumber("4"));
+        buttonNumberFive.setOnAction(event -> handleButtonPressNumber("5"));
+        buttonNumberSix.setOnAction(event -> handleButtonPressNumber("6"));
+        buttonNumberSeven.setOnAction(event -> handleButtonPressNumber("7"));
+        buttonNumberEight.setOnAction(event -> handleButtonPressNumber("8"));
+        buttonNumberNine.setOnAction(event -> handleButtonPressNumber("9"));
+        buttonOperationClear.setOnAction(event -> handleButtonPressClear());
 
         Scene scene = new Scene(gridPane);
         stage.setScene(scene);
         stage.show();
     }
 
-    private void handleButtonPress(String buttonValue) {
-        textField.setText(textField.getText() + buttonValue);
+    private void handleButtonPressNumber(String buttonValue) {
+        if (Objects.equals(textField.getText(), "0") && !Objects.equals(buttonValue, "0")) {
+            textField.setText(buttonValue);
+        } else if (!Objects.equals(textField.getText(), "0")) {
+            textField.setText(textField.getText() + buttonValue);
+        }
+
     }
 
+    private void handleButtonPressClear() {
+        textField.setText("0");
+    }
     public static void main(String[] args) {
         launch();
     }
